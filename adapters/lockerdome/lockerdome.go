@@ -64,7 +64,6 @@ func (adapter *LockerDomeAdapter) MakeRequests(
 const unexpectedStatusCodeMessage = "Unexpected status code: %d. Run with request.debug = 1 for more info"
 
 // MakeBids unpacks the server's response into Bids.
-// internal original request in OpenRTB, external = result of us having converted it (what comes out of MakeRequests)
 func (adapter *LockerDomeAdapter) MakeBids(
 	openRTBRequest *openrtb.BidRequest,
 	requestToBidder *adapters.RequestData,
