@@ -472,9 +472,9 @@ func SetupViper(v *viper.Viper, filename string) {
 	}
 	// Fixes #475: Some defaults will be set just so they are accessible via environment variables
 	// (basically so viper knows they exist)
-	v.SetDefault("external_url", "http://localhost:8000")
+	v.SetDefault("external_url", "http://localhost:8888")
 	v.SetDefault("host", "")
-	v.SetDefault("port", 8000)
+	v.SetDefault("port", 8888)
 	v.SetDefault("admin_port", 6060)
 	v.SetDefault("enable_gzip", false)
 	v.SetDefault("status_response", "")
@@ -591,6 +591,7 @@ func SetupViper(v *viper.Viper, filename string) {
 	v.SetDefault("adapters.improvedigital.endpoint", "http://ad.360yield.com/pbs")
 	v.SetDefault("adapters.ix.endpoint", "http://appnexus-us-east.lb.indexww.com/transbidder?p=184932")
 	v.SetDefault("adapters.lifestreet.endpoint", "https://prebid.s2s.lfstmedia.com/adrequest")
+	v.SetDefault("adapters.lockerdome.endpoint", "https://local.lockerdome.com:3000/ladbid/prebidserver/openrtb2")
 	v.SetDefault("adapters.openx.endpoint", "http://rtb.openx.net/prebid")
 	v.SetDefault("adapters.pubmatic.endpoint", "http://hbopenbid.pubmatic.com/translator?source=prebid-server")
 	v.SetDefault("adapters.pulsepoint.endpoint", "http://bid.contextweb.com/header/s/ortb/prebid-s2s")

@@ -1,10 +1,10 @@
 package lockerdome
 
 import (
-  "fmt"
 	"bytes"
 	"context"
 	"encoding/json"
+	"fmt"
 	"io/ioutil"
 	"net/http"
 	"net/http/httptest"
