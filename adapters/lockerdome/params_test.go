@@ -1,10 +1,12 @@
-LockerDomepackage lockerdome
+package lockerdome
 
 import (
 	"encoding/json"
 	"testing"
 
 	"github.com/prebid/prebid-server/openrtb_ext"
+
+	"fmt"
 )
 
 // This file actually intends to test static/bidder-params/lockerdome.json
@@ -13,6 +15,7 @@ import (
 
 // TestValidParams makes sure that the LockerDome schema accepts all imp.ext fields which we intend to support.
 func TestValidParams(t *testing.T) {
+	fmt.Println("---------testing valid params")
 	validator, err := openrtb_ext.NewBidderParamsValidator("../../static/bidder-params")
 	if err != nil {
 		t.Fatalf("Failed to fetch the json-schemas. %v", err)
@@ -28,6 +31,7 @@ func TestValidParams(t *testing.T) {
 
 // TestInvalidParams makes sure that the LockerDome schema rejects all the imp.ext fields we don't support.
 func TestInvalidParams(t *testing.T) {
+	fmt.Println("---------testing invalid params")
 	validator, err := openrtb_ext.NewBidderParamsValidator("../../static/bidder-params")
 	if err != nil {
 		t.Fatalf("Failed to fetch the json-schemas. %v", err)
@@ -40,11 +44,20 @@ func TestInvalidParams(t *testing.T) {
 	}
 }
 
-
+// TODO: string vs number?
 var validParams = []string{
-	
+	`{"adUnitId": "1234567890"}` // adUnitID can be a string of numbers
+	`{"adUnitId": "LD1234567890"}`, // adUnitId can start with "LD"
 }
 
 var invalidParams = []string{
-
+	``,
+	`null`,
+	`true`,
+	`1`,
+	`1.5`,
+	`[]`,
+	`{}`,
+	`{"adUnitId": "LD"}`, // adUnitId can't just be "LD"
+	`{"adUnitId": 1234567890}` // adUnitID can't be a number
 }
