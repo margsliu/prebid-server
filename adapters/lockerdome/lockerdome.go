@@ -1,25 +1,13 @@
 package lockerdome
 
-import ( // cut down to the ones we absolutely need
-	// "bytes"
-	// "context"
-	"encoding/json" // essential?
-	"fmt"           // essential?
-	"net/http"      // essential?
-	// "io/ioutil"
-	// "strconv"
-	// "strings"
+import (
+	"encoding/json"
+	"fmt"
+	"net/http"
 
-	// "github.com/buger/jsonparser"
-	// "github.com/prebid/prebid-server/pbs"
-
-	// "golang.org/x/net/context/ctxhttp"
-
-	"github.com/mxmCherry/openrtb"               // essential?
-	"github.com/prebid/prebid-server/adapters"   // essential?
-	"github.com/prebid/prebid-server/errortypes" // essential?
-	// "github.com/prebid/prebid-server/openrtb_ext" // might need bc of our params?
-	// "github.com/prebid/prebid-server/pbsmetrics"
+	"github.com/mxmCherry/openrtb"
+	"github.com/prebid/prebid-server/adapters"
+	"github.com/prebid/prebid-server/errortypes"
 )
 
 // Implements Bidder interface.
@@ -51,9 +39,7 @@ func (adapter *LockerDomeAdapter) MakeRequests(
 		Body:    openRTBRequestJSON,
 		Headers: headers,
 	}
-	fmt.Println("---------TEST--------------------------------- ")
-	fmt.Println("---------endpoint:\n", adapter.endpoint)
-	fmt.Println("---------openRTBRequestJSON\n", string(openRTBRequestJSON))
+
 	requestsToBidder = append(requestsToBidder, requestToBidder)
 
 	return requestsToBidder, errs
@@ -95,13 +81,12 @@ func (adapter *LockerDomeAdapter) MakeBids(
 	fmt.Println("---------http.StatusOK")
 
 	var openRTBBidderResponse openrtb.BidResponse
-	// fmt.Println("---------openrtb.BidResponse\n", openrtb.BidResponse)
 	if err := json.Unmarshal(bidderRawResponse.Body, &openRTBBidderResponse); err != nil {
 		return nil, []error{err}
 	}
 	fmt.Println("---------openRTBBidderResponse\n", openRTBBidderResponse)
 
-	bidsCapacity := len(openRTBBidderResponse.SeatBid[0].Bid) // e.g. SeatBid[0] is LD, Bid is an array?
+	bidsCapacity := len(openRTBBidderResponse.SeatBid[0].Bid) // SeatBid[0] is LockerDome
 	bidderResponse = adapters.NewBidderResponseWithBidsCapacity(bidsCapacity)
 
 	var typedBid adapters.TypedBid

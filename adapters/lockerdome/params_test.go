@@ -42,7 +42,6 @@ func TestInvalidParams(t *testing.T) {
 	}
 }
 
-// TODO: string vs number?
 var validParams = []string{
 	`{"adUnitId": "LD1234567890"}`, // adUnitId can start with "LD"
 }
