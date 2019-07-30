@@ -1,8 +1,8 @@
 package lockerdome
 
 import (
-	"fmt"
 	"encoding/json"
+	"fmt"
 	"testing"
 
 	"github.com/prebid/prebid-server/openrtb_ext"
