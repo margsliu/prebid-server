@@ -1,12 +1,11 @@
 package lockerdome
 
 import (
+	"fmt"
 	"encoding/json"
 	"testing"
 
 	"github.com/prebid/prebid-server/openrtb_ext"
-
-	"fmt"
 )
 
 // This file tests static/bidder-params/lockerdome.json
