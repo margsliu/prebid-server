@@ -4,8 +4,8 @@ import ( // cut down to the ones we absolutely need
 	// "bytes"
 	// "context"
 	"encoding/json" // essential?
-	"fmt" // essential?
-	"net/http" // essential?
+	"fmt"           // essential?
+	"net/http"      // essential?
 	// "io/ioutil"
 	// "strconv"
 	// "strings"
@@ -15,8 +15,8 @@ import ( // cut down to the ones we absolutely need
 
 	// "golang.org/x/net/context/ctxhttp"
 
-	"github.com/mxmCherry/openrtb" // essential?
-	"github.com/prebid/prebid-server/adapters" // essential?
+	"github.com/mxmCherry/openrtb"               // essential?
+	"github.com/prebid/prebid-server/adapters"   // essential?
 	"github.com/prebid/prebid-server/errortypes" // essential?
 	// "github.com/prebid/prebid-server/openrtb_ext" // might need bc of our params?
 	// "github.com/prebid/prebid-server/pbsmetrics"
@@ -35,7 +35,6 @@ func (adapter *LockerDomeAdapter) MakeRequests(
 	requestsToBidder []*adapters.RequestData,
 	errs []error,
 ) {
-
 
 	openRTBRequestJSON, err := json.Marshal(openRTBRequest)
 
@@ -56,7 +55,6 @@ func (adapter *LockerDomeAdapter) MakeRequests(
 	fmt.Println("---------endpoint:\n", adapter.endpoint)
 	fmt.Println("---------openRTBRequestJSON\n", string(openRTBRequestJSON))
 	requestsToBidder = append(requestsToBidder, requestToBidder)
-
 
 	return requestsToBidder, errs
 }
@@ -118,7 +116,6 @@ func (adapter *LockerDomeAdapter) MakeBids(
 	fmt.Println("---------bidderResponse\n", bidderResponse)
 	return bidderResponse, nil
 }
-
 
 func NewLockerDomeBidder(endpoint string) *LockerDomeAdapter {
 	return &LockerDomeAdapter{endpoint: endpoint}

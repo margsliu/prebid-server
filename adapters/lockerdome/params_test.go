@@ -9,9 +9,8 @@ import (
 	"fmt"
 )
 
-// This file actually intends to test static/bidder-params/lockerdome.json
-//
-// These also validate the format of the external API: request.imp[i].ext.lockerdome
+// This file tests static/bidder-params/lockerdome.json
+// and validates the format of the external API: request.imp[i].ext.lockerdome
 
 // TestValidParams makes sure that the LockerDome schema accepts all imp.ext fields which we intend to support.
 func TestValidParams(t *testing.T) {
@@ -27,7 +26,6 @@ func TestValidParams(t *testing.T) {
 		}
 	}
 }
-
 
 // TestInvalidParams makes sure that the LockerDome schema rejects all the imp.ext fields we don't support.
 func TestInvalidParams(t *testing.T) {
@@ -46,7 +44,6 @@ func TestInvalidParams(t *testing.T) {
 
 // TODO: string vs number?
 var validParams = []string{
-	`{"adUnitId": "1234567890"}` // adUnitID can be a string of numbers
 	`{"adUnitId": "LD1234567890"}`, // adUnitId can start with "LD"
 }
 
@@ -58,6 +55,6 @@ var invalidParams = []string{
 	`1.5`,
 	`[]`,
 	`{}`,
-	`{"adUnitId": "LD"}`, // adUnitId can't just be "LD"
-	`{"adUnitId": 1234567890}` // adUnitID can't be a number
+	`{"adUnitId": true}`,
+	`{"adUnitId": 123456789}`, // adUnitId can't be a number
 }
