@@ -16,16 +16,9 @@ type LockerDomeAdapter struct {
 }
 
 // MakeRequests makes the HTTP requests which should be made to fetch bids [from the bidder, in this case, LockerDome]
-func (adapter *LockerDomeAdapter) MakeRequests(
-	openRTBRequest *openrtb.BidRequest,
-	extraReqInfo *adapters.ExtraRequestInfo,
-) (
-	requestsToBidder []*adapters.RequestData,
-	errs []error,
-) {
+func (adapter *LockerDomeAdapter) MakeRequests(openRTBRequest *openrtb.BidRequest, extraReqInfo *adapters.ExtraRequestInfo) (requestsToBidder []*adapters.RequestData, errs []error) {
 
 	openRTBRequestJSON, err := json.Marshal(openRTBRequest)
-
 	if err != nil {
 		errs = append(errs, err)
 		return nil, errs
@@ -33,6 +26,7 @@ func (adapter *LockerDomeAdapter) MakeRequests(
 
 	headers := http.Header{}
 	headers.Add("Content-Type", "application/json;charset=utf-8")
+
 	requestToBidder := &adapters.RequestData{
 		Method:  "POST",
 		Uri:     adapter.endpoint,
@@ -48,57 +42,39 @@ func (adapter *LockerDomeAdapter) MakeRequests(
 const unexpectedStatusCodeMessage = "Unexpected status code: %d. Run with request.debug = 1 for more info"
 
 // MakeBids unpacks the server's response into Bids.
-func (adapter *LockerDomeAdapter) MakeBids(
-	openRTBRequest *openrtb.BidRequest,
-	requestToBidder *adapters.RequestData,
-	bidderRawResponse *adapters.ResponseData,
-) (
-	bidderResponse *adapters.BidderResponse,
-	errs []error,
-) {
+func (adapter *LockerDomeAdapter) MakeBids(openRTBRequest *openrtb.BidRequest, requestToBidder *adapters.RequestData, bidderRawResponse *adapters.ResponseData) (bidderResponse *adapters.BidderResponse, errs []error) {
 
 	if bidderRawResponse.StatusCode == http.StatusNoContent {
-		fmt.Println("---------http.StatusNoContent")
 		return nil, nil
 	}
 
 	if bidderRawResponse.StatusCode == http.StatusBadRequest {
-		fmt.Println("---------http.StatusBadRequest")
-		err := &errortypes.BadInput{
+		return nil, []error{&errortypes.BadInput{
 			Message: fmt.Sprintf(unexpectedStatusCodeMessage, bidderRawResponse.StatusCode),
-		}
-		return nil, []error{err}
+		}}
 	}
 
 	if bidderRawResponse.StatusCode != http.StatusOK {
-		fmt.Println("---------NOT http.StatusOK")
-		err := &errortypes.BadServerResponse{
+		return nil, []error{&errortypes.BadServerResponse{
 			Message: fmt.Sprintf(unexpectedStatusCodeMessage, bidderRawResponse.StatusCode),
-		}
-		return nil, []error{err}
+		}}
 	}
-
-	fmt.Println("---------http.StatusOK")
 
 	var openRTBBidderResponse openrtb.BidResponse
 	if err := json.Unmarshal(bidderRawResponse.Body, &openRTBBidderResponse); err != nil {
 		return nil, []error{err}
 	}
-	fmt.Println("---------openRTBBidderResponse\n", openRTBBidderResponse)
 
-	bidsCapacity := len(openRTBBidderResponse.SeatBid[0].Bid) // SeatBid[0] is LockerDome
+	bidsCapacity := len(openRTBBidderResponse.SeatBid[0].Bid)
 	bidderResponse = adapters.NewBidderResponseWithBidsCapacity(bidsCapacity)
 
 	var typedBid adapters.TypedBid
 	for _, seatBid := range openRTBBidderResponse.SeatBid {
 		for i := range seatBid.Bid {
-			fmt.Println("---------seatBid.Bid[i]\n", seatBid.Bid[i])
 			typedBid = adapters.TypedBid{Bid: &seatBid.Bid[i], BidType: "banner"}
 			bidderResponse.Bids = append(bidderResponse.Bids, &typedBid)
 		}
 	}
-
-	fmt.Println("---------bidderResponse\n", bidderResponse)
 	return bidderResponse, nil
 }
 

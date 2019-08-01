@@ -2,7 +2,6 @@ package lockerdome
 
 import (
 	"encoding/json"
-	"fmt"
 	"testing"
 
 	"github.com/prebid/prebid-server/openrtb_ext"
@@ -13,7 +12,6 @@ import (
 
 // TestValidParams makes sure that the LockerDome schema accepts all imp.ext fields which we intend to support.
 func TestValidParams(t *testing.T) {
-	fmt.Println("---------testing valid params")
 	validator, err := openrtb_ext.NewBidderParamsValidator("../../static/bidder-params")
 	if err != nil {
 		t.Fatalf("Failed to fetch the json-schemas. %v", err)
@@ -28,7 +26,6 @@ func TestValidParams(t *testing.T) {
 
 // TestInvalidParams makes sure that the LockerDome schema rejects all the imp.ext fields we don't support.
 func TestInvalidParams(t *testing.T) {
-	fmt.Println("---------testing invalid params")
 	validator, err := openrtb_ext.NewBidderParamsValidator("../../static/bidder-params")
 	if err != nil {
 		t.Fatalf("Failed to fetch the json-schemas. %v", err)
@@ -46,13 +43,15 @@ var validParams = []string{
 }
 
 var invalidParams = []string{
-	``,
 	`null`,
+	`nil`,
+	``,
 	`true`,
 	`1`,
 	`1.5`,
 	`[]`,
 	`{}`,
+	`{"adUnitId": ""}`,
 	`{"adUnitId": true}`,
 	`{"adUnitId": 123456789}`, // adUnitId can't be a number
 }

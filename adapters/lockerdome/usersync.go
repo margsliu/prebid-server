@@ -8,5 +8,5 @@ import (
 )
 
 func NewLockerDomeSyncer(temp *template.Template) usersync.Usersyncer {
-	return adapters.NewSyncer("lockerdome", 0, temp, adapters.SyncTypeRedirect) // sync type must match type in usersync_test.go
+	return adapters.NewSyncer("lockerdome", 0, temp, adapters.SyncTypeRedirect)
 }
