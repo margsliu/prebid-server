@@ -51,7 +51,6 @@ var invalidParams = []string{
 	`1.5`,
 	`[]`,
 	`{}`,
-	`{"adUnitId": ""}`,
 	`{"adUnitId": true}`,
 	`{"adUnitId": 123456789}`, // adUnitId can't be a number
 }
