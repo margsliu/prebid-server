@@ -26,6 +26,8 @@ func (adapter *LockerDomeAdapter) MakeRequests(openRTBRequest *openrtb.BidReques
 
 	headers := http.Header{}
 	headers.Add("Content-Type", "application/json;charset=utf-8")
+	headers.Add("Accept", "application/json")
+	headers.Add("x-openrtb-version", "2.5")
 
 	requestToBidder := &adapters.RequestData{
 		Method:  "POST",
@@ -63,6 +65,10 @@ func (adapter *LockerDomeAdapter) MakeBids(openRTBRequest *openrtb.BidRequest, r
 	var openRTBBidderResponse openrtb.BidResponse
 	if err := json.Unmarshal(bidderRawResponse.Body, &openRTBBidderResponse); err != nil {
 		return nil, []error{err}
+	}
+
+	if len(openRTBBidderResponse.SeatBid) == 0 {
+		return nil, nil
 	}
 
 	bidsCapacity := len(openRTBBidderResponse.SeatBid[0].Bid)
