@@ -434,7 +434,7 @@ func (cfg *Configuration) setDerivedDefaults() {
 	setDefaultUsersync(cfg.Adapters, openrtb_ext.BidderImprovedigital, "https://ad.360yield.com/server_match?gdpr={{.GDPR}}&gdpr_consent={{.GDPRConsent}}&r="+url.QueryEscape(externalURL)+"%2Fsetuid%3Fbidder%3Dimprovedigital%26gdpr%3D{{.GDPR}}%26gdpr_consent%3D{{.GDPRConsent}}%26uid%3D%7BPUB_USER_ID%7D")
 	setDefaultUsersync(cfg.Adapters, openrtb_ext.BidderIx, "https://ssum.casalemedia.com/usermatchredir?s=184932&cb="+url.QueryEscape(externalURL)+"%2Fsetuid%3Fbidder%3Dix%26gdpr%3D{{.GDPR}}%26gdpr_consent%3D{{.GDPRConsent}}%26uid%3D")
 	setDefaultUsersync(cfg.Adapters, openrtb_ext.BidderLifestreet, "https://ads.lfstmedia.com/idsync/137062?synced=1&ttl=1s&rurl="+url.QueryEscape(externalURL)+"%2Fsetuid%3Fbidder%3Dlifestreet%26gdpr%3D{{.GDPR}}%26gdpr_consent%3D{{.GDPRConsent}}%26uid%3D%24%24visitor_cookie%24%24")
-	// openrtb_ext.BidderLockerDome doesn't have a good default.
+	setDefaultUsersync(cfg.Adapters, openrtb_ext.BidderLockerDome, "https://local.lockerdome.com:3000/usync/prebidserver?gdpr={{.GDPR}}&gdpr_consent={{.GDPRConsent}}&redirect="+url.QueryEscape(externalURL)+"%2Fsetuid%3Fbidder%3Dlockerdome%26gdpr%3D{{.GDPR}}%26gdpr_consent%3D{{.GDPRConsent}}%26uid%3D%7B%7Buid%7D%7D")
 	setDefaultUsersync(cfg.Adapters, openrtb_ext.BidderOpenx, "https://rtb.openx.net/sync/prebid?r="+url.QueryEscape(externalURL)+"%2Fsetuid%3Fbidder%3Dopenx%26gdpr%3D{{.GDPR}}%26gdpr_consent%3D{{.GDPRConsent}}%26uid%3D%24%7BUID%7D")
 	setDefaultUsersync(cfg.Adapters, openrtb_ext.BidderPubmatic, "https://ads.pubmatic.com/AdServer/js/user_sync.html?predirect="+url.QueryEscape(externalURL)+"%2Fsetuid%3Fbidder%3Dpubmatic%26gdpr%3D{{.GDPR}}%26gdpr_consent%3D{{.GDPRConsent}}%26uid%3D")
 	setDefaultUsersync(cfg.Adapters, openrtb_ext.BidderPulsepoint, "https://bh.contextweb.com/rtset?pid=561205&ev=1&rurl="+url.QueryEscape(externalURL)+"%2Fsetuid%3Fbidder%3Dpulsepoint%26gdpr%3D{{.GDPR}}%26gdpr_consent%3D{{.GDPRConsent}}%26uid%3D%25%25VGUID%25%25")
@@ -473,9 +473,9 @@ func SetupViper(v *viper.Viper, filename string) {
 	}
 	// Fixes #475: Some defaults will be set just so they are accessible via environment variables
 	// (basically so viper knows they exist)
-	v.SetDefault("external_url", "http://localhost:8000")
+	v.SetDefault("external_url", "http://localhost:8888")
 	v.SetDefault("host", "")
-	v.SetDefault("port", 8000)
+	v.SetDefault("port", 8888)
 	v.SetDefault("admin_port", 6060)
 	v.SetDefault("enable_gzip", false)
 	v.SetDefault("status_response", "")
@@ -619,7 +619,7 @@ func SetupViper(v *viper.Viper, filename string) {
 	v.SetDefault("analytics.file.filename", "")
 	v.SetDefault("amp_timeout_adjustment_ms", 0)
 	v.SetDefault("gdpr.host_vendor_id", 0)
-	v.SetDefault("gdpr.usersync_if_ambiguous", false)
+	v.SetDefault("gdpr.usersync_if_ambiguous", true)
 	v.SetDefault("gdpr.timeouts_ms.init_vendorlist_fetches", 0)
 	v.SetDefault("gdpr.timeouts_ms.active_vendorlist_fetch", 0)
 	v.SetDefault("gdpr.non_standard_publishers", []string{""})
