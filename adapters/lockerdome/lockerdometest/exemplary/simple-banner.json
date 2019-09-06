@@ -24,7 +24,7 @@
   "httpCalls": [
     {
       "expectedRequest": {
-        "uri": "https://local.lockerdome.com:3000/ladbid/prebidserver/openrtb2",
+        "uri": "https://lockerdome.com/ladbid/prebidserver/openrtb2",
         "body": {
           "id": "test-request-id",
           "imp": [

@@ -6,5 +6,5 @@ import (
 )
 
 func TestJsonSamples(t *testing.T) {
-	adapterstest.RunJSONBidderTest(t, "lockerdometest", NewLockerDomeBidder("https://local.lockerdome.com:3000/ladbid/prebidserver/openrtb2"))
+	adapterstest.RunJSONBidderTest(t, "lockerdometest", NewLockerDomeBidder("https://lockerdome.com/ladbid/prebidserver/openrtb2"))
 }
