@@ -6,7 +6,7 @@
   "properties": {
     "adUnitId": {
       "type": "string",
-      "description": "A tag which identifies the LD ad unit by adUnitId"
+      "description": "A tag which identifies the LockerDome ad unit by adUnitId"
     }
   },
   "required": ["adUnitId"]

@@ -8,7 +8,7 @@ import (
 )
 
 func TestLockerDomeSyncer(t *testing.T) {
-	temp := template.Must(template.New("sync-template").Parse("https://lockerdome.com/usync/prebidserver?gdpr={{.GDPR}}&gdpr_consent={{.GDPRConsent}}&pid=6597154458173441&redirect=https%3A%2F%2Flocalhost%2Fsetuid%3Fbidder%3Dlockerdome%26gdpr%3D{{.GDPR}}%26gdpr_consent%3D{{.GDPRConsent}}%26uid%3D%7B%7Buid%7D%7D"))
+	temp := template.Must(template.New("sync-template").Parse("https://lockerdome.com/usync/prebidserver?pid=6597154458173441&gdpr={{.GDPR}}&gdpr_consent={{.GDPRConsent}}&redirect=https%3A%2F%2Flocalhost%2Fsetuid%3Fbidder%3Dlockerdome%26gdpr%3D{{.GDPR}}%26gdpr_consent%3D{{.GDPRConsent}}%26uid%3D%7B%7Buid%7D%7D"))
 	syncer := NewLockerDomeSyncer(temp)
 	syncInfo, err := syncer.GetUsersyncInfo("", "")
 	assert.NoError(t, err)
